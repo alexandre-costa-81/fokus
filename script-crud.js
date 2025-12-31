@@ -1,6 +1,9 @@
 // Encontrar o botão adicionar tarefa
 
 const btnAdicionarTarefa = document.querySelector(".app__button--add-task");
+const btnCancelarTarefa = document.querySelector(
+  ".app__form-footer__button--cancel"
+);
 const formAdicionarTarefa = document.querySelector(".app__form-add-task");
 const textarea = document.querySelector(".app__form-textarea");
 const ulTarefas = document.querySelector(".app__section-task-list");
@@ -47,8 +50,17 @@ function criarElementoTarefa(tarefa) {
   return li;
 }
 
+function limparTarefa() {
+  textarea.value = "";
+  formAdicionarTarefa.classList.toggle("hidden");
+}
+
 btnAdicionarTarefa.addEventListener("click", function () {
   formAdicionarTarefa.classList.toggle("hidden");
+});
+
+btnCancelarTarefa.addEventListener("click", function (event) {
+  limparTarefa();
 });
 
 formAdicionarTarefa.addEventListener("submit", function (event) {
@@ -65,8 +77,7 @@ formAdicionarTarefa.addEventListener("submit", function (event) {
 
   atualizarTarefas();
 
-  textarea.value = "";
-  formAdicionarTarefa.classList.add("hidden");
+  limparTarefa();
 });
 
 tarefas.forEach(function (tarefa) {
