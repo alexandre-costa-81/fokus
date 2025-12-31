@@ -19,7 +19,7 @@ const somZerar = new Audio("/sons/beep.mp3");
 
 const tempoNaTela = document.querySelector("#timer");
 
-let tempoDecorridoEmSegundos = 5;
+let tempoDecorridoEmSegundos = 1500;
 let intervaloId = null;
 
 musicaFocoInput.addEventListener("change", () => {
@@ -79,7 +79,7 @@ const contagemRegressiva = () => {
     return;
   }
   tempoDecorridoEmSegundos -= 1;
-  console.log("Tempo decorrido: " + tempoDecorridoEmSegundos);
+  mostrarTempo();
 };
 
 startPauseBr.addEventListener("click", () => {
@@ -104,3 +104,10 @@ function zerar() {
   iniciarOuPausarImg.setAttribute("src", "/imagens/play_arrow.png");
   iniciarOuPausarBt.textContent = "Começar";
 }
+
+function mostrarTempo() {
+  const tempo = tempoDecorridoEmSegundos;
+  tempoNaTela.innerHTML = `${tempo}`;
+}
+
+mostrarTempo();
