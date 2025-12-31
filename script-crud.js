@@ -52,28 +52,33 @@ function criarElementoTarefa(tarefa) {
 
   li.append(svg, paragrafo, botao);
 
-  li.onclick = function () {
-    document
-      .querySelectorAll(".app__section-task-list-item-active")
-      .forEach(function (item) {
-        item.classList.remove("app__section-task-list-item-active");
-      });
+  if (tarefa.completa) {
+    li.classList.add("app__section-task-list-item-complete");
+    botao.setAttribute("disabled", "disabled");
+  } else {
+    li.onclick = function () {
+      document
+        .querySelectorAll(".app__section-task-list-item-active")
+        .forEach(function (item) {
+          item.classList.remove("app__section-task-list-item-active");
+        });
 
-    if (tarefaSelecionada == tarefa) {
-      paragrafoDescricaoTarefa.textContent = "";
-      tarefaSelecionada = null;
-      liTarefaSelecionada = null;
-      return;
-    }
+      if (tarefaSelecionada == tarefa) {
+        paragrafoDescricaoTarefa.textContent = "";
+        tarefaSelecionada = null;
+        liTarefaSelecionada = null;
+        return;
+      }
 
-    tarefaSelecionada = tarefa;
+      tarefaSelecionada = tarefa;
 
-    liTarefaSelecionada = li;
+      liTarefaSelecionada = li;
 
-    paragrafoDescricaoTarefa.textContent = tarefa.descricao;
+      paragrafoDescricaoTarefa.textContent = tarefa.descricao;
 
-    li.classList.add("app__section-task-list-item-active");
-  };
+      li.classList.add("app__section-task-list-item-active");
+    };
+  }
 
   return li;
 }
@@ -120,5 +125,7 @@ document.addEventListener("focoFinalizado", function () {
     liTarefaSelecionada
       .querySelector("button")
       .setAttribute("disabled", "disabled");
+    tarefaSelecionada.completa = true;
+    atualizarTarefas();
   }
 });
