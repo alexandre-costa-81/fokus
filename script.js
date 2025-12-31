@@ -4,6 +4,8 @@ const curtoBt = document.querySelector(".app__card-button--curto");
 const longoBt = document.querySelector(".app__card-button--longo");
 const botoes = document.querySelectorAll(".app__card-button");
 const startPauseBr = document.querySelector("#start-pause");
+const iniciarOuPausarBt = document.querySelector("#start-pause span");
+const iniciarOuPausarImg = document.querySelector("#start-pause img");
 
 const titulo = document.querySelector(".app__title");
 const banner = document.querySelector(".app__image");
@@ -14,6 +16,8 @@ const musica = new Audio("/sons/luna-rise-part-one.mp3");
 const somIniciar = new Audio("/sons/play.wav");
 const somPausar = new Audio("/sons/pause.mp3");
 const somZerar = new Audio("/sons/beep.mp3");
+
+const tempoNaTela = document.querySelector("#timer");
 
 let tempoDecorridoEmSegundos = 5;
 let intervaloId = null;
@@ -70,8 +74,8 @@ function alterarContexto(contexto) {
 const contagemRegressiva = () => {
   if (tempoDecorridoEmSegundos <= 0) {
     somZerar.play();
-    zerar();
     console.log("Contagem regressiva finalizada.");
+    zerar();
     return;
   }
   tempoDecorridoEmSegundos -= 1;
@@ -88,11 +92,15 @@ function iniciarOuPausar() {
     zerar();
     return;
   }
-  intervaloId = setInterval(contagemRegressiva, 1000);
   somIniciar.play();
+  intervaloId = setInterval(contagemRegressiva, 1000);
+  iniciarOuPausarImg.setAttribute("src", "/imagens/pause.png");
+  iniciarOuPausarBt.textContent = "Pausar";
 }
 
 function zerar() {
   clearInterval(intervaloId);
   intervaloId = null;
+  iniciarOuPausarImg.setAttribute("src", "/imagens/play_arrow.png");
+  iniciarOuPausarBt.textContent = "Começar";
 }
