@@ -3,12 +3,20 @@ const focoBt = document.querySelector(".app__card-button--foco");
 const curtoBt = document.querySelector(".app__card-button--curto");
 const longoBt = document.querySelector(".app__card-button--longo");
 const botoes = document.querySelectorAll(".app__card-button");
+const startPauseBr = document.querySelector("#start-pause");
 
 const titulo = document.querySelector(".app__title");
 const banner = document.querySelector(".app__image");
 
 const musicaFocoInput = document.querySelector("#alternar-musica");
+
 const musica = new Audio("/sons/luna-rise-part-one.mp3");
+const somIniciar = new Audio("/sons/play.wav");
+const somPausar = new Audio("/sons/pause.mp3");
+const somZerar = new Audio("/sons/beep.mp3");
+
+let tempoDecorridoEmSegundos = 5;
+let intervaloId = null;
 
 musicaFocoInput.addEventListener("change", () => {
   if (musica.paused) {
@@ -57,4 +65,34 @@ function alterarContexto(contexto) {
     default:
       break;
   }
+}
+
+const contagemRegressiva = () => {
+  if (tempoDecorridoEmSegundos <= 0) {
+    somZerar.play();
+    zerar();
+    console.log("Contagem regressiva finalizada.");
+    return;
+  }
+  tempoDecorridoEmSegundos -= 1;
+  console.log("Tempo decorrido: " + tempoDecorridoEmSegundos);
+};
+
+startPauseBr.addEventListener("click", () => {
+  iniciarOuPausar();
+});
+
+function iniciarOuPausar() {
+  if (intervaloId) {
+    somPausar.play();
+    zerar();
+    return;
+  }
+  intervaloId = setInterval(contagemRegressiva, 1000);
+  somIniciar.play();
+}
+
+function zerar() {
+  clearInterval(intervaloId);
+  intervaloId = null;
 }
