@@ -79,6 +79,12 @@ const contagemRegressiva = () => {
   if (tempoDecorridoEmSegundos <= 0) {
     somZerar.play();
     console.log("Contagem regressiva finalizada.");
+    const focoAtivo = html.getAttribute("data-contexto") === "foco";
+    if (focoAtivo) {
+      const evento = new CustomEvent("focoFinalizado");
+      document.dispatchEvent(evento);
+    }
+
     zerar();
     return;
   }
