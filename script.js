@@ -19,7 +19,7 @@ const somZerar = new Audio("/sons/beep.mp3");
 
 const tempoNaTela = document.querySelector("#timer");
 
-let tempoDecorridoEmSegundos = 1500;
+let tempoDecorridoEmSegundos = 5;
 let intervaloId = null;
 
 musicaFocoInput.addEventListener("change", () => {
