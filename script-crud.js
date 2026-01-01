@@ -5,6 +5,7 @@ const btnCancelarTarefa = document.querySelector(
   ".app__form-footer__button--cancel"
 );
 const btnRemoverConcluidas = document.querySelector("#btn-remover-concluidas");
+const btnRemoverTodas = document.querySelector("#btn-remover-todas");
 const formAdicionarTarefa = document.querySelector(".app__form-add-task");
 const textarea = document.querySelector(".app__form-textarea");
 const ulTarefas = document.querySelector(".app__section-task-list");
@@ -131,13 +132,20 @@ document.addEventListener("focoFinalizado", function () {
   }
 });
 
-btnRemoverConcluidas.onclick = function () {
-  const seletor = ".app__section-task-list-item-complete";
+const removerTarefas = function (somenteCompletas) {
+  const seletor = somenteCompletas
+    ? ".app__section-task-list-item-complete"
+    : ".app__section-task-list-item";
   document.querySelectorAll(seletor).forEach(function (item) {
     item.remove();
   });
-  tarefas = tarefas.filter(function (tarefa) {
-    return !tarefa.completa;
-  });
+  tarefas = somenteCompletas
+    ? tarefas.filter(function (tarefa) {
+        return !tarefa.completa;
+      })
+    : [];
   atualizarTarefas();
 };
+
+btnRemoverConcluidas.onclick = () => removerTarefas(true);
+btnRemoverTodas.onclick = () => removerTarefas(false);
